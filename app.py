@@ -11,10 +11,7 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 
 # Updated connection string with URL-encoded password and increased timeout
-client = MongoClient(
-    'mongodb+srv://heilaoshi31:Steven040506@cluster0.9fkg9lz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
-    serverSelectionTimeoutMS=5000,
-    socketTimeoutMS=5000
+client = MongoClient('mongodb+srv://heilaoshi31:Steven040506@cluster0.9fkg9lz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', tls=True, tlsAllowInvalidCertificates=True
 )
 db = client['financial_data']
 collection = db['apple_stock_2023']
