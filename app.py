@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 import pandas as pd
 import plotly.express as px
@@ -12,31 +12,24 @@ logging.basicConfig(level=logging.INFO)
 
 # Updated connection string with URL-encoded password and increased timeout
 client = MongoClient(
-    #'mongodb+srv://heilaoshi31:Steven040506%40@cluster0.9fkg9lz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
     'mongodb+srv://heilaoshi31:Steven040506@cluster0.9fkg9lz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
-    #serverSelectionTimeoutMS=5000,
-    #socketTimeoutMS=5000
+    serverSelectionTimeoutMS=5000,
+    socketTimeoutMS=5000
 )
 db = client['financial_data']
 collection = db['apple_stock_2023']
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return "<h1>Welcome to the Financial Data App</h1><p>Navigate to /fetch_data to query data.</p>"
 
-@app.route('/test_mongo')
 @app.route('/test_mongo')
 def test_mongo():
     try:
-        client = MongoClient(mongo_uri)
-        db = client['Apple']
-        collection = db['financial_report']
-        # Fetch a single document to test connection
         document = collection.find_one()
         return jsonify({"status": "success", "document": document})
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
-
 
 @app.route('/fetch_data', methods=['GET', 'POST'])
 def fetch_data():
@@ -68,34 +61,42 @@ def fetch_data():
                 df = pd.DataFrame(data)
                 fig = px.line(df, x='Date', y='Close', title='Apple Stock Prices')
                 graph_html = fig.to_html(full_html=False)
-                return render_template('fetch_data.html', graph_html=graph_html)
+                return f"<h1>Apple Stock Prices</h1>{graph_html}"
             else:
                 logging.info("No data found for the specified date range.")
                 return "No data found for the specified date range."
         except Exception as e:
             logging.error(f"An error occurred while fetching data: {e}")
             return f"An error occurred while fetching data: {e}"
-    return render_template('fetch_data.html')
+    return '''
+        <form method="post">
+            Start Date: <input type="date" name="start_date">
+            End Date: <input type="date" name="end_date">
+            <input type="submit">
+        </form>
+    '''
 
+# Remove or update routes that reference missing templates and static files
 @app.route('/table')
 def table():
-    return render_template('table.html')
+    return "<h1>Table View</h1><p>This route will be updated later.</p>"
 
 @app.route('/graphs')
 def graphs():
-    return render_template('graphs.html')
+    return "<h1>Graphs</h1><p>This route will be updated later.</p>"
 
 @app.route('/interactive_graphs')
 def interactive_graphs():
-    return render_template('interactive_graphs.html')
+    return "<h1>Interactive Graphs</h1><p>This route will be updated later.</p>"
 
 @app.route('/yahoo_graphs')
 def yahoo_graphs():
-    return render_template('yahoo_graphs.html')
+    return "<h1>Yahoo Graphs</h1><p>This route will be updated later.</p>"
 
-@app.route('/reports/<report_name>')
-def serve_report(report_name):
-    return send_from_directory('static', report_name)
+# Comment out or remove routes serving static reports if they don't exist
+# @app.route('/reports/<report_name>')
+# def serve_report(report_name):
+#     return send_from_directory('static', report_name)
 
 if __name__ == '__main__':
     app.run(debug=True)
