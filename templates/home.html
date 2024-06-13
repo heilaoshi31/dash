@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>2023 Apple Financial Report</h1>
+    <p>Welcome to the Home Page</p>
+    <p>This is the home page of our simple Flask website.</p>
+
+    <h2>Reports</h2>
+    <ul>
+        <li><a href="{{ url_for('serve_report', report_name='expense_breakdown.html') }}">Expense Breakdown</a></li>
+        <li><a href="{{ url_for('serve_report', report_name='revenue_net_income_comparison.html') }}">Revenue and Net Income Comparison</a></li>
+        <li><a href="{{ url_for('serve_report', report_name='revenue_operating_expenses.html') }}">Revenue Operating Expenses</a></li>
+        <li><a href="{{ url_for('serve_report', report_name='revenue_trend.html') }}">Revenue Trend</a></li>
+    </ul>
+
+    <h2>Balance Sheet 2023</h2>
+    <a href="{{ url_for('serve_report', report_name='balance_sheet_2023.html') }}">View Balance Sheet Report</a>
+
+    <h2>Cash Flow Statement 2023</h2>
+    <a href="{{ url_for('serve_report', report_name='cash_flow_statement_2023.html') }}">View Cash Flow Report</a>
+
+    <h2>Income Statement 2023</h2>
+    <a href="{{ url_for('serve_report', report_name='income_statement_2023.html') }}">View Income Statement Report</a>
+
+    <h2>Revenue and Net Income Comparison</h2>
+    <img src="{{ url_for('static', filename='Revenue and Net Income Comparison.png') }}" alt="Revenue and Net Income Comparison">
+
+    <h2>Sales and Revenue Distribution</h2>
+    <img src="{{ url_for('static', filename='Sales and Revenue Distribution.png') }}" alt="Sales and Revenue Distribution">
+
+    <h2>Sales Trend Over 2023</h2>
+    <img src="{{ url_for('static', filename='Sales Trend Over 2023.png') }}" alt="Sales Trend Over 2023">
+
+    <h2>Interactive Graphs</h2>
+    <a href="{{ url_for('interactive_graphs') }}">View Interactive Graphs</a>
+
+    <h2>Yahoo Graphs</h2>
+    <a href="{{ url_for('yahoo_graphs') }}">View Yahoo Graphs</a>
+
+    <h2>Fetch Data</h2>
+    <a href="{{ url_for('fetch_data') }}">Fetch Data</a>
+
+</body>
+</html>

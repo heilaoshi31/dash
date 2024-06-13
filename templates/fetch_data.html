@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Fetch Data</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('fetch_data') }}">Fetch Data</a></li>
+            <li><a href="{{ url_for('table') }}">Table</a></li>
+            <li><a href="{{ url_for('graphs') }}">Graphs</a></li>
+            <li><a href="{{ url_for('interactive_graphs') }}">Interactive Graphs</a></li>
+            <li><a href="{{ url_for('yahoo_graphs') }}">Yahoo Graphs</a></li>
+        </ul>
+    </nav>
+    <section>
+        <form method="POST">
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required>
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required>
+            <button type="submit">Fetch</button>
+        </form>
+
+        {% if graph_html %}
+            <div>{{ graph_html|safe }}</div>
+        {% endif %}
+    </section>
+    <footer>
+        <p>&copy; 2024 Financial Data App</p>
+    </footer>
+</body>
+</html>

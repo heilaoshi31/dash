@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Graphs</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('fetch_data') }}">Fetch Data</a></li>
+                <li><a href="{{ url_for('table') }}">Table</a></li>
+                <li><a href="{{ url_for('graphs') }}">Graphs</a></li>
+                <li><a href="{{ url_for('interactive_graphs') }}">Interactive Graphs</a></li>
+                <li><a href="{{ url_for('yahoo_graphs') }}">Yahoo Graphs</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Revenue and Net Income Comparison</h2>
+        <img src="{{ url_for('static', filename='Revenue and Net Income Comparison.png') }}" alt="Revenue and Net Income Comparison">
+
+        <h2>Sales and Revenue Distribution</h2>
+        <img src="{{ url_for('static', filename='Sales and Revenue Distribution.png') }}" alt="Sales and Revenue Distribution">
+
+        <h2>Sales Trend Over 2023</h2>
+        <img src="{{ url_for('static', filename='Sales Trend Over 2023.png') }}" alt="Sales Trend Over 2023">
+    </main>
+    <footer>
+        <p>&copy; 2024 My Website</p>
+    </footer>
+</body>
+</html>
