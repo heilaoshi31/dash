@@ -56,22 +56,27 @@ def fetch_data():
             
             if data:
                 df = pd.DataFrame(data)
+                
+                # Ensure Date column is parsed correctly from string to datetime
+                df['Date'] = pd.to_datetime(df['Date'])
+                
+                # Sort by Date
+                df = df.sort_values(by='Date')
+                
+                # Check for duplicate dates
+                df = df.drop_duplicates(subset='Date')
+
+                # Plotting
                 fig = px.line(df, x='Date', y='Close', title='Apple Stock Prices')
                 graph_html = fig.to_html(full_html=False)
-                return f"<h1>Apple Stock Prices</h1>{graph_html}"
+                return render_template('fetch_data.html', graph_html=graph_html)
             else:
                 logging.info("No data found for the specified date range.")
                 return "No data found for the specified date range."
         except Exception as e:
             logging.error(f"An error occurred while fetching data: {e}")
             return f"An error occurred while fetching data: {e}"
-    return '''
-        <form method="post">
-            Start Date: <input type="date" name="start_date">
-            End Date: <input type="date" name="end_date">
-            <input type="submit">
-        </form>
-    '''
+    return render_template('fetch_data.html')
 
 # Remove or update routes that reference missing templates and static files
 @app.route('/table')
